@@ -26,10 +26,11 @@ test_destination_index = get_traveler_location(test_traveler)
 def add_attraction(destination, attraction):
   try:
     destination_index = get_destination_index(destination)
+    attractions_for_list = attractions[destination_index]
+    attractions_for_list.append(attraction)
   except ValueError:
-    return
-  attractions_for_list = attractions[destination_index]
-  attractions_for_list.append(attraction)
+    return 
+
   
   
 add_attraction("Los Angeles, USA", ['Venice Beach', ['beach']])
@@ -45,7 +46,24 @@ add_attraction("So Paulo, Brazil", ["Ptio do Colgio", ["historical site"]])
 add_attraction("Cairo, Egypt", ["Pyramids of Giza", ["monument", "historical site"]])
 add_attraction("Cairo, Egypt", ["Egyptian Museum", ["museum"]])
 
-print(attractions)
+#print(attractions)
+
+def find_attractions(destination, interests):
+  destination_index = get_destination_index(destination)
+  attractions_in_city = attractions[destination_index]
+  attractions_with_interest = []
+  possible_attractions = [attraction for attraction in attractions_in_city]
+  for attraction in possible_attractions:
+    attraction_tags = attraction[1]
+    for interest in attraction_tags:
+      if interests == interest:
+        attractions_with_interest.append(attraction[0])
+      else:
+        continue
+  return attractions_with_interest
   
+la_arts = find_attractions("Shanghai, China", 'art')
+  
+print(la_arts)
       
   
